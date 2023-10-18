@@ -18,3 +18,11 @@
   )
 
 (example-usage)
+
+;; Tag: ["Clojure" "functional programming"]
+;;  - Record 4 (2023-10-13)
+;;  - Record 1 (2023-10-15)
+;; Tag: ["Clojure" "web-dev"]
+;;  - Record 2 (2023-10-12)
+;; Tag: ["Java" "programming"]
+;;  - Record 3 (2023-10-18)
