@@ -1,7 +1,13 @@
 (defn group-blog-entries-by-tags [blog-entries]
-  (let [grouped-blog-entries (group-by :tags blog-entries)]
-    (into {} (for [[tag entries] grouped-blog-entries]
-               [tag (sort-by :date entries)]))))
+  (reduce (fn [result entry]
+            (let [tags (:tags entry)
+                  date (:date entry)]
+              (reduce (fn [acc tag]
+                        (update acc tag conj entry))
+                      result
+                      tags)))
+          {}
+          blog-entries))
 
 (defn example-usage []
   (def blog-entries
