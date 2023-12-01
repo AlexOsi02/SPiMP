@@ -1,15 +1,16 @@
 (ns file-reader.core
-  (:require [clojure.core.async :refer [chan put! <! >! go]])
+  (:require [clojure.java.io :as io]
+            [clojure.core.async :as async :refer [chan put! <! go]]))
 
 (defn read-char-channel [file-path]
-  (let [char-channel (chan)]
+  (let [char-channel (async/chan)]
     (go
-      (with-open [reader (clojure.java.io/reader file-path)]
+      (with-open [reader (io/reader file-path)]
         (let [buffer (make-array Character/TYPE 1)]
           (loop []
             (when (= 1 (.read reader buffer))
-              (put! char-channel (char buffer 0))
-              (recur)))))))
+              (async/put! char-channel (char buffer 0))
+              (recur))))))
     char-channel)
 
 (defn char-channel-to-string-channel [char-channel]
